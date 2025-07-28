@@ -2170,3 +2170,95 @@ main {
         transform: scale(1);
     }
 }
+
+/* Activity Bubble Messages */
+.activity-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.activity-bubble {
+    position: fixed;
+    bottom: -100px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 12px 18px;
+    border-radius: 25px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 193, 0.3);
+    box-shadow: 0 4px 20px rgba(255, 20, 147, 0.2);
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+    z-index: 1001;
+    min-width: fit-content;
+    width: auto;
+}
+
+.activity-bubble.bubble-pop {
+    animation: bubblePop 8s ease-out forwards;
+}
+
+.heart-icon {
+    font-size: 16px;
+    animation: heartPulse 2s ease-in-out infinite;
+    filter: hue-rotate(320deg) saturate(1.5);
+}
+
+.bubble-text {
+    line-height: 1.3;
+}
+
+@keyframes bubblePop {
+    0% {
+        opacity: 0;
+        transform: translateY(150px) scale(0.8);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(-50px) scale(1);
+    }
+    20% {
+        transform: translateY(-80px) scale(1);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(-120px) scale(1);
+    }
+    90% {
+        opacity: 0.3;
+        transform: translateY(-180px) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-220px) scale(0.7);
+    }
+}
+
+@keyframes heartPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: hue-rotate(320deg) saturate(1.5);
+    }
+    50% {
+        transform: scale(1.2);
+        filter: hue-rotate(300deg) saturate(2);
+    }
+}
+
+/* Hide bubbles on smaller screens */
+@media (max-width: 768px) {
+    .activity-bubble {
+        display: none;
+    }
+}
