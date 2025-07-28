@@ -2055,3 +2055,118 @@ main {
 .energy-insights div {
     margin-bottom: 0.5rem;
 }
+
+/* Planner Button Section */
+.planner-button-section {
+    margin: 3rem 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Lightning Button Styles */
+.planner-button {
+    position: relative;
+    width: 200px;
+    height: 60px;
+    background: linear-gradient(45deg, #910A67, #7a5af8);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: white;
+}
+
+.planner-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(114, 4, 85, 0.4);
+}
+
+.planner-button .fold {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.planner-button:hover .fold {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.planner-button .points_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.planner-button .point {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: sparkle 2s infinite ease-in-out;
+    opacity: 0;
+}
+
+.planner-button .point:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+.planner-button .point:nth-child(2) { top: 30%; left: 80%; animation-delay: 0.2s; }
+.planner-button .point:nth-child(3) { top: 60%; left: 25%; animation-delay: 0.4s; }
+.planner-button .point:nth-child(4) { top: 15%; left: 60%; animation-delay: 0.6s; }
+.planner-button .point:nth-child(5) { top: 70%; left: 75%; animation-delay: 0.8s; }
+.planner-button .point:nth-child(6) { top: 45%; left: 10%; animation-delay: 1s; }
+.planner-button .point:nth-child(7) { top: 80%; left: 50%; animation-delay: 1.2s; }
+.planner-button .point:nth-child(8) { top: 25%; left: 40%; animation-delay: 1.4s; }
+.planner-button .point:nth-child(9) { top: 55%; left: 85%; animation-delay: 1.6s; }
+.planner-button .point:nth-child(10) { top: 35%; left: 20%; animation-delay: 1.8s; }
+
+.planner-button:hover .point {
+    animation-duration: 1s;
+}
+
+.planner-button .inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.planner-button .icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    transition: all 0.3s ease;
+}
+
+.planner-button:hover .icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
