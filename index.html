@@ -425,6 +425,9 @@
 
     </main>
 
+    <!-- Activity Notifications -->
+    <div id="activity-notifications" class="activity-container"></div>
+
     <!-- Trends Modal -->
     <div id="trendsModal" class="modal">
         <div class="modal-content">
@@ -465,6 +468,7 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="typewriter.js"></script>
     <script src="curved-scrollbar.js"></script>
     <script>
@@ -497,6 +501,133 @@
                 energyModal.style.display = 'none';
             }
         }
+
+        // Activity Bubble Messages System
+        const activityMessages = [
+            "Jade started their 1st task today.",
+            "Iris started their 5th task today.",
+            "River started their 2nd task today.",
+            "Sam started their 1st task today.",
+            "Maya started their 8th task today.",
+            "Alex started their 3rd task today.",
+            "Taylor started their 12th task today.",
+            "Casey started their 1st task today.",
+            "Jordan started their 4th task today.",
+            "Blake started their 7th task today.",
+            "Riley started their 2nd task today.",
+            "Morgan started their 15th task today.",
+            "Jamie started their 1st task today.",
+            "Avery started their 6th task today.",
+            "Cameron started their 1st task today.",
+            "Dylan started their 9th task today.",
+            "Emery started their 1st task today.",
+            "Finley started their 3rd task today.",
+            "Gray started their 1st task today.",
+            "Hayden started their 11th task today.",
+            "Indigo started their 2nd task today.",
+            "Jude started their 4th task today.",
+            "Kai started their 1st task today.",
+            "Lane started their 13th task today.",
+            "Marlowe started their 5th task today.",
+            "Nova started their 1st task today.",
+            "Ocean started their 7th task today.",
+            "Parker started their 2nd task today.",
+            "Quincy started their 1st task today.",
+            "Remy started their 10th task today.",
+            "Sage started their 3rd task today.",
+            "Tate started their 1st task today.",
+            "Uma started their 6th task today.",
+            "Vale started their 1st task today.",
+            "Wren started their 14th task today.",
+            "Xander started their 4th task today.",
+            "Yara started their 1st task today.",
+            "Zion started their 8th task today.",
+            "Ari started their 2nd task today.",
+            "Bay started their 1st task today.",
+            "Cove started their 5th task today.",
+            "Drew started their 1st task today.",
+            "Eden started their 9th task today.",
+            "Fern started their 3rd task today.",
+            "Grey started their 1st task today.",
+            "Haven started their 7th task today.",
+            "Luna started their 1st task today.",
+            "Sage started their 16th task today.",
+            "River started their 11th task today.",
+            "Sky started their 1st task today."
+        ];
+
+        const bubblePositions = [
+            { left: '15%', delay: 0 },
+            { left: '25%', delay: 200 },
+            { left: '75%', delay: 400 },
+            { left: '85%', delay: 600 },
+            { left: '10%', delay: 800 },
+            { left: '80%', delay: 1000 }
+        ];
+
+        let currentMessageIndex = 0;
+        let notificationInterval;
+        let hasScrolledToBottom = false;
+
+        function createBubbleMessage(message) {
+            const position = bubblePositions[Math.floor(Math.random() * bubblePositions.length)];
+            const bubble = document.createElement('div');
+            bubble.className = 'activity-bubble';
+            bubble.style.left = position.left;
+            
+            bubble.innerHTML = `
+                <div class="heart-icon">💖</div>
+                <span class="bubble-text">${message}</span>
+            `;
+            
+            return bubble;
+        }
+
+        function showBubbleMessage() {
+            const container = document.getElementById('activity-notifications');
+            const message = activityMessages[currentMessageIndex];
+            
+            const bubble = createBubbleMessage(message);
+            container.appendChild(bubble);
+            
+            // Start bubble animation
+            setTimeout(() => {
+                bubble.classList.add('bubble-pop');
+            }, 100);
+            
+            // Remove bubble after animation
+            setTimeout(() => {
+                if (bubble.parentNode) {
+                    bubble.parentNode.removeChild(bubble);
+                }
+            }, 8000);
+            
+            currentMessageIndex = (currentMessageIndex + 1) % activityMessages.length;
+        }
+
+        // Planner Button Hover Events
+        const plannerButton = document.querySelector('.planner-button');
+        
+        plannerButton.addEventListener('mouseenter', function() {
+            if (!notificationInterval) {
+                showBubbleMessage(); // Show first bubble immediately
+                notificationInterval = setInterval(showBubbleMessage, 5000);
+            }
+        });
+        
+        plannerButton.addEventListener('mouseleave', function() {
+            if (notificationInterval) {
+                clearInterval(notificationInterval);
+                notificationInterval = null;
+            }
+            // Clear any existing bubbles
+            const existingBubbles = document.querySelectorAll('.activity-bubble');
+            existingBubbles.forEach(bubble => {
+                if (bubble.parentNode) {
+                    bubble.parentNode.removeChild(bubble);
+                }
+            });
+        });
     </script>
 </body>
 </html>
