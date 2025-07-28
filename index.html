@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presently - Body doubling for your brain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <main>
+        <section class="hero">
+            <h1 class="main-title">Presently
+                <div class="aurora">
+                    <div class="aurora__item"></div>
+                    <div class="aurora__item"></div>
+                    <div class="aurora__item"></div>
+                    <div class="aurora__item"></div>
+                </div>
+            </h1>
+            <div class="value-proposition">
+                <p class="main-value">Executive dysfunction makes everything harder.</p>
+                <p class="sub-value">Our tools are built for ADHD minds that need space, support, and just knowing someone else is trying too.</p>
+            </div>
+            <div class="message-composer">
+                <div class="message-input-container">
+                    <span class="typewrite" 
+                          data-period="3000" 
+                          data-type='["I know what to do but I cant start...", "Everything feels overwhelming today", "Why is this so easy for everyone else?", "I will definitely do it after lunch...", "Maybe if someone else was working too?", "I just need someone to sit with me"]'>
+                        <span class="wrap"></span>
+                    </span>
+                    <input type="email" 
+                           class="email-input" 
+                           placeholder="Enter your email address"
+                           style="display: none;">
+                </div>
+                <div class="send-button-container">
+                    <button class="send-button" onclick="handleSubmit()">
+                        <span class="fold"></span>
+                        <div class="points_wrapper">
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                            <i class="point"></i>
+                        </div>
+                        <span class="inner">
+                            <svg class="send-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                            </svg>
+                            <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="20,6 9,17 4,12"></polyline>
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="beta-text-hover beta-text-1">Get early access</div>
+                    <div class="beta-text-hover beta-text-2">Enter email address</div>
+                </div>
+            </div>
+            <div class="validation-feedback"></div>
+            <div class="error-message" style="display: none;"></div>
+            <div class="beta-info">
+                <div class="beta-status">🌱 Beta coming soon • <span id="signup-counter">19</span>/50 spots taken</div>
+                <div class="next-steps">After signup: Beta access → Discord invite → Shape the product</div>
+                <div class="privacy-notice">No spam, just one email when we're ready for testing.</div>
+            </div>
+        </section>
+
+
+        <div class="features-container">
+            <!-- Hero Feature -->
+            <div class="hero-feature">
+                <div class="feature-card hero-card" data-feature="chat">
+                    <div class="hero-badge">✨ Most Loved Feature</div>
+                    <h2>Virtual Body Doubling</h2>
+                    <div class="chat-preview">
+                        <div class="chat-message">
+                            <span class="chat-user">Sam:</span> Just finished that thing! 🎉
+                        </div>
+                        <div class="chat-message">
+                            <span class="chat-user">Alex:</span> Congrats! Taking a quick walk
+                        </div>
+                        <div class="chat-message own-message">
+                            <span class="chat-user">You:</span> Anyone else feel scattered today?
+                        </div>
+                        <div class="chat-message">
+                            <span class="chat-user">Jordan:</span> YES. Brain fog is real today
+                        </div>
+                    </div>
+                    <div class="chat-controls">
+                        <div class="quick-responses">
+                            <span class="quick-btn">You got this!</span>
+                            <span class="quick-btn">Same here</span>
+                            <span class="quick-btn">🎉</span>
+                        </div>
+                        <div class="chat-status">
+                            <span class="status-dot"></span> 4 people in break room
+                        </div>
+                    </div>
+                    <div class="feature-explanation">
+                        <p><strong>The magic happens when you're not alone.</strong> Connect with others who understand the ADHD struggle. Share wins, ask for support, or just lurk—no pressure to participate. Safe space with gentle moderation.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="top-row">
+                <!-- Tasks Card -->
+                <div class="feature-card visible" data-feature="tasks">
+                    <div class="tabs">
+                        <div class="tab active">Today's Tasks</div>
+                        <div class="tab">Done</div>
+                    </div>
+                    <div class="todo-input-container">
+                        <input type="text" placeholder="What would you like to do today?" />
+                        <button class="add-btn">Add</button>
+                    </div>
+                    <ul class="task-list">
+                        <li class="task">
+                            <input type="checkbox" id="task1" />
+                            <span>Review meeting notes</span>
+                            <div class="task-actions">
+                                <button class="timer-task">⏱</button>
+                                <button class="add-subtask">+</button>
+                                <button class="delete-task">✕</button>
+                            </div>
+                        </li>
+                        <li class="task active-task">
+                            <input type="checkbox" id="task2" />
+                            <span>Write project proposal</span>
+                            <div class="task-actions">
+                                <button class="timer-task">⏱</button>
+                                <button class="add-subtask">+</button>
+                                <button class="delete-task">✕</button>
+                            </div>
+                        </li>
+                        <li class="task">
+                            <input type="checkbox" id="task3" />
+                            <span>Call dentist for appointment</span>
+                            <div class="task-actions">
+                                <button class="timer-task">⏱</button>
+                                <button class="add-subtask">+</button>
+                                <button class="delete-task">✕</button>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="feature-explanation">
+                        <p>Break overwhelming days into bite-sized chunks. The gentle highlighting shows what's active, reducing decision fatigue while keeping you focused.</p>
+                    </div>
+                </div>
+
+                <!-- Analytics Card -->
+                <div class="feature-card visible" data-feature="analytics">
+                    <h2>Pattern Insights</h2>
+                    <div class="analytics-preview">
+                        <div class="insight-item">
+                            <div class="insight-label">Your peak focus time</div>
+                            <div class="insight-value">2-4 PM</div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-label">Most productive days</div>
+                            <div class="insight-value">Tue, Thu</div>
+                        </div>
+                        <div class="chart-preview">
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 60%"></div>
+                                <div class="chart-bar" style="height: 80%"></div>
+                                <div class="chart-bar" style="height: 40%"></div>
+                                <div class="chart-bar" style="height: 90%"></div>
+                                <div class="chart-bar" style="height: 65%"></div>
+                                <div class="chart-bar" style="height: 75%"></div>
+                                <div class="chart-bar" style="height: 45%"></div>
+                            </div>
+                            <div class="chart-labels">
+                                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                            </div>
+                        </div>
+                        <div class="trend-links-container">
+                            <div class="trend-wrapper">
+                                <span class="trend-link" onclick="openTrendsModal()">View Trends</span>
+                            </div>
+                            <div class="trend-wrapper">
+                                <span class="trend-link" onclick="openEnergyModal()">Energy Insights</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-explanation">
+                        <p>See your unique patterns without judgment. When executive dysfunction makes everything feel chaotic, data helps you understand your natural rhythms and plan accordingly.</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="middle-row">
+                <!-- Timer Card -->
+                <div class="feature-card visible" data-feature="timer">
+                    <h2>Focus Timer</h2>
+                    <div class="timer-display">
+                        <span class="timer-time">25:00</span>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="timer-btn active">Start</button>
+                        <button class="timer-btn">Pause</button>
+                        <button class="timer-btn">Reset</button>
+                    </div>
+                    <div class="timer-progress">
+                        <div class="timer-progress-bar" style="width: 35%"></div>
+                    </div>
+                    <div class="feature-explanation">
+                        <p>The Pomodoro technique works because it removes the anxiety of "how long will this take?" You commit to just 25 minutes, making any task feel manageable.</p>
+                    </div>
+                </div>
+
+                <!-- Mood Card -->
+                <div class="feature-card visible" data-feature="mood">
+                    <div class="card-header">
+                        <h2>How are you feeling?</h2>
+                        <button class="mood-help-btn">?</button>
+                    </div>
+                    <div class="mood-container">
+                        <div>
+                            <div class="emoji" data-mood="😐">😐</div>
+                            <div class="mood-label">meh</div>
+                        </div>
+                        <div>
+                            <div class="emoji" data-mood="🙂">🙂</div>
+                            <div class="mood-label">okay</div>
+                        </div>
+                        <div class="mood-selected">
+                            <div class="emoji selected" data-mood="😄">😄</div>
+                            <div class="mood-label">good</div>
+                        </div>
+                        <div>
+                            <div class="emoji" data-mood="😮‍💨">😮‍💨</div>
+                            <div class="mood-label">tired</div>
+                        </div>
+                        <div>
+                            <div class="emoji" data-mood="😫">😫</div>
+                            <div class="mood-label">stressed</div>
+                        </div>
+                    </div>
+                    <div class="mood-battery">
+                        <div class="today-energy-label">Today's energy</div>
+                        <div class="battery-container">
+                            <div class="battery-gauge">
+                                <div class="battery-body">
+                                    <div class="battery-bar filled" data-bar="1"></div>
+                                    <div class="battery-bar filled" data-bar="2"></div>
+                                    <div class="battery-bar filled" data-bar="3"></div>
+                                    <div class="battery-bar empty" data-bar="4"></div>
+                                    <div class="battery-bar empty" data-bar="5"></div>
+                                </div>
+                                <div class="battery-tip"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-explanation">
+                        <p>Quick emotional check-ins reveal patterns over time. The energy battery helps you understand your capacity, making it easier to plan realistic days and be kinder to yourself.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-row">
+                <!-- Notes Card -->
+                <div class="feature-card notes-card visible" data-feature="notes">
+                    <div class="notes-section">
+                        <div class="notes-sidebar">
+                            <h3>My Notes</h3>
+                            <button class="add-note-btn">+ Add Note</button>
+                            <div class="notes-list">
+                                <div class="note-item active">Project Ideas</div>
+                                <div class="note-item">Meeting Notes</div>
+                                <div class="note-item">Random Thoughts</div>
+                                <div class="note-item">Weekend Plans</div>
+                            </div>
+                        </div>
+                        <div class="notes-main">
+                            <div class="note-editor">
+                                <input type="text" class="note-title-input" value="Project Ideas" />
+                                <div class="note-content">
+                                    • Mobile app for habit tracking<br>
+                                    • Redesign portfolio website<br>
+                                    • Learn about accessibility features<br>
+                                    • Start podcast about productivity<br>
+                                    • Build a gentle task manager...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-explanation">
+                        <p>A dedicated space for all those scattered thoughts. Writing things down reduces mental load and helps you see connections between ideas you might otherwise forget.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-section-title">FAQ</h2>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <div class="faq-points-wrapper">
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                    </div>
+                    <div class="first-content">
+                        <span>Is this just another productivity app?</span>
+                    </div>
+                    <div class="second-content">
+                        <div class="question-reminder">Is this just another productivity app?</div>
+                        <div class="answer">Nope. It's the opposite. Presently isn't here to optimize you — it's here to accompany you. Especially on the days when you feel foggy, frozen, or like your brain hit a wall and bounced.</div>
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-points-wrapper">
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                    </div>
+                    <div class="first-content">
+                        <span>Do I have to talk or keep my camera on?</span>
+                    </div>
+                    <div class="second-content">
+                        <div class="question-reminder">Do I have to talk or keep my camera on?</div>
+                        <div class="answer">Not at all. Most rooms are silent by default. Mic and camera are there if you want them. No forced small talk. No "quick intros." Just focus and go.</div>
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-points-wrapper">
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                    </div>
+                    <div class="first-content">
+                        <span>Are there fixed session times?</span>
+                    </div>
+                    <div class="second-content">
+                        <div class="question-reminder">Are there fixed session times?</div>
+                        <div class="answer">Nope again. Come in for five minutes or five hours — it's drop-in, drop-out. No countdown clocks yelling at you.</div>
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-points-wrapper">
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                    </div>
+                    <div class="first-content">
+                        <span>Is this for people with ADHD only?</span>
+                    </div>
+                    <div class="second-content">
+                        <div class="question-reminder">Is this for people with ADHD only?</div>
+                        <div class="answer">Nope. While it's designed with ADHD and neurodivergent users in mind, presently is for anyone who feels disconnected, overwhelmed, or just needs a gentle way to start again.</div>
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-points-wrapper">
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                    </div>
+                    <div class="first-content">
+                        <span>What if I join and still don't get anything done?</span>
+                    </div>
+                    <div class="second-content">
+                        <div class="question-reminder">What if I join and still don't get anything done?</div>
+                        <div class="answer">Then you showed up anyway — and that counts. presently isn't here to measure your output. It's here to offer space. You can start again tomorrow (or in ten minutes — we're not the boss of you).</div>
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-points-wrapper">
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                        <i class="faq-point"></i>
+                    </div>
+                    <div class="first-content">
+                        <span>Do you have printable tools or offline options?</span>
+                    </div>
+                    <div class="second-content">
+                        <div class="question-reminder">Do you have printable tools or offline options?</div>
+                        <div class="answer">Yes! We're adding simple, paper-friendly templates for people who can't look at another screen - or just need to scribble their way out of executive dysfunction.<br><br>You'll get our free printable Focus Kit (includes a weekly planner, one-win-per-day tracker, and work ritual guide) as a thank-you when you join the waitlist ✨</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Trends Modal -->
+    <div id="trendsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Mood Trends</h3>
+                <span class="close" onclick="closeTrendsModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="mood-trends">
+                    <div class="mood-section-title">This Week</div>
+                    <div><span>😐 15%</span><div class='trend-bar'><div class='trend-bar-inner' style='width:15%;'></div></div></div>
+                    <div><span>🙂 35%</span><div class='trend-bar'><div class='trend-bar-inner' style='width:35%;'></div></div></div>
+                    <div><span>😄 25%</span><div class='trend-bar'><div class='trend-bar-inner' style='width:25%;'></div></div></div>
+                    <div><span>😮‍💨 20%</span><div class='trend-bar'><div class='trend-bar-inner' style='width:20%;'></div></div></div>
+                    <div><span>😫 5%</span><div class='trend-bar'><div class='trend-bar-inner' style='width:5%;'></div></div></div>
+                    <div style="margin-bottom: 0.5rem;">Positive moods 60% this week</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Energy Modal -->
+    <div id="energyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Energy Insights</h3>
+                <span class="close" onclick="closeEnergyModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="energy-insights">
+                    <div>Your peak energy: 2-4pm ⚡ (based on 28 sessions)</div>
+                    <div style="margin-top: 0.5rem;">You seem less focused in the evening 🌙</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">
+                        Try scheduling important tasks during your peak hours for better focus and less mental fatigue.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="typewriter.js"></script>
+    <script src="curved-scrollbar.js"></script>
+    <script>
+        // Modal functions
+        function openTrendsModal() {
+            document.getElementById('trendsModal').style.display = 'block';
+        }
+        
+        function closeTrendsModal() {
+            document.getElementById('trendsModal').style.display = 'none';
+        }
+        
+        function openEnergyModal() {
+            document.getElementById('energyModal').style.display = 'block';
+        }
+        
+        function closeEnergyModal() {
+            document.getElementById('energyModal').style.display = 'none';
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const trendsModal = document.getElementById('trendsModal');
+            const energyModal = document.getElementById('energyModal');
+            
+            if (event.target == trendsModal) {
+                trendsModal.style.display = 'none';
+            }
+            if (event.target == energyModal) {
+                energyModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
