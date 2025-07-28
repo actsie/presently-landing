@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Calm - Your Gentle Digital Planner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="header-main">
+                    <h1>Daily Calm</h1>
+                    <p class="quote" id="quoteDisplay"></p>
+                </div>
+                <div class="theme-selector">
+                    <div class="checkbox-wrapper-5">
+                        <div class="check">
+                            <input id="themeToggle" type="checkbox" title="Toggle dark mode">
+                            <label for="themeToggle"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="date-strip-wrapper">
+            <div id="monthLabel" class="month-label">Month ▾</div>
+            <div id="dateStrip" class="date-strip"></div>
+            <div id="monthDropdown" class="month-dropdown"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="card" id="tasksCard">
+                <div class="tabs">
+                    <div class="tab active" id="tasksTabBtn">Today's Tasks</div>
+                    <div class="tab" id="templateTabBtn">Task Templates</div>
+                    <div class="tab" id="doneTabBtn">Done</div>
+                </div>
+                <div id="tasksTab" class="tab-content active">
+                    <div class="todo-input-container">
+                        <input type="text" id="taskInput" placeholder="What would you like to do today?" />
+                        <button id="addTask">Add</button>
+                    </div>
+                    <ul id="taskList"></ul>
+                </div>
+                <div id="templateTab" class="tab-content">
+                    <div class="templates-actions">
+                        <button id="addTemplateBtn">New Template</button>
+                    </div>
+                    <input type="text" id="templateFilter" placeholder="Filter templates" class="template-filter">
+                    <ul id="templateList"></ul>
+                    <button id="addToTodayBtn" class="add-to-today-btn add-to-today-btn-hidden">
+                        <span class="circle" aria-hidden="true">
+                            <span class="icon arrow"></span>
+                        </span>
+                        <span class="button-text">Add Task</span>
+                    </button>
+                    <div id="templateToast" class="template-toast floating-msg template-toast-hidden"></div>
+                </div>
+                <div id="doneTab" class="tab-content">
+                    <ul id="doneTaskList"></ul>
+                    <div class="trend-links-container" id="dailyReportContainer">
+                        <div class="trend-wrapper">
+                            <span id="viewDailyReport" class="trend-link">Daily Report</span>
+                            <div id="dailyReportTooltip" class="trend-tooltip">
+                                <div id="dailyReportContent" class="mood-trends"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="taskInfoCard" class="task-info-card"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>How are you feeling?</h2>
+                    <button class="mood-help-btn" id="moodHelpBtn" title="Why track your mood?">?</button>
+                </div>
+                <div class="mood-container" id="mainMoodContainer">
+                    <div>
+                        <div class="emoji" data-mood="😐">😐</div>
+                        <div class="mood-label">meh</div>
+                    </div>
+                    <div>
+                        <div class="emoji" data-mood="🙂">🙂</div>
+                        <div class="mood-label">okay</div>
+                    </div>
+                    <div>
+                        <div class="emoji" data-mood="😄">😄</div>
+                        <div class="mood-label">good</div>
+                    </div>
+                    <div>
+                        <div class="emoji" data-mood="😮‍💨">😮‍💨</div>
+                        <div class="mood-label">tired</div>
+                    </div>
+                    <div>
+                        <div class="emoji" data-mood="😫">😫</div>
+                        <div class="mood-label">stressed</div>
+                    </div>
+                </div>
+                
+                <!-- Integrated Battery Mood Gauge -->
+                <div class="mood-battery">
+                    <div class="today-energy-label" id="todayEnergyLabel">Today's energy</div>
+                    <div class="battery-container">
+                        <div class="battery-gauge">
+                            <div class="battery-body">
+                                <div class="battery-bar filled" data-bar="1"></div>
+                                <div class="battery-bar filled" data-bar="2"></div>
+                                <div class="battery-bar filled" data-bar="3"></div>
+                                <div class="battery-bar empty" data-bar="4"></div>
+                                <div class="battery-bar empty" data-bar="5"></div>
+                            </div>
+                            <div class="battery-tip"></div>
+                        </div>
+                    </div>
+                    <div class="mood-context-message" id="moodContextMessage">Select your mood to see your energy</div>
+                </div>
+                
+                <div class="mood-history" id="moodHistory"></div>
+                <div class="mood-timeline" id="moodTimeline"></div>
+                <div class="mood-actions">
+                    <button id="openPastMoodsBtn" class="link-button">View Past Moods</button>
+                    <div class="trend-links-container">
+                        <div class="trend-wrapper">
+                            <span id="toggleTrendView" class="trend-link">View Trends</span>
+                            <div id="trendTooltip" class="trend-tooltip">
+                                <div id="moodTrends" class="mood-trends"></div>
+                            </div>
+                        </div>
+                        <div class="trend-wrapper">
+                            <span id="toggleEnergyView" class="trend-link">Energy Insights</span>
+                            <div id="energyTooltip" class="trend-tooltip">
+                                <div id="energyInsights" class="mood-trends"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card" id="timerSection">
+                <h2>Focus Timer</h2>
+                <div id="floatingMsg" class="floating-msg floating-msg-hidden">Active timer is running elsewhere (see top-right)</div>
+                <div id="minimizedTaskTimer" class="minimized-task-timer">
+                    <div>
+                        <span id="minTaskTitle"></span>
+                        <span id="minTaskTime"></span>
+                    </div>
+                    <div class="task-progress"><div class="task-progress-bar" id="minTaskProgressBar"></div></div>
+                    <div class="timer-controls">
+                        <button onclick="pauseTaskTimer()" id="minPauseBtn">⏸️</button>
+                        <button onclick="resumeTaskTimer()" id="minResumeBtn" class="timer-resume-btn-hidden">▶️</button>
+                        <button onclick="completeCurrentTask()" title="Complete">✓</button>
+                        <button onclick="cancelTaskTimer()">✖️</button>
+                        <button onclick="addMoreTimeDuringRun()">➕</button>
+                        <button onclick="maximizeTaskTimer()">🔼</button>
+                    </div>
+                </div>
+                <div class="timer-display" id="timerArea">
+                    <span id="timerDisplay">25:00</span>
+                    <input id="timerInput" class="timer-input timer-input-hidden" type="number" min="1" value="25">
+                </div>
+                <div class="timer-controls" id="focusTimerControls">
+                    <button class="timer-btn" id="startTimer">Start</button>
+                    <button class="timer-btn" id="pauseTimer" disabled>Pause</button>
+                    <button class="timer-btn" id="resetTimer">Reset</button>
+                </div>
+                <div class="timer-progress">
+                    <div class="timer-progress-bar" id="timerProgressBar"></div>
+                </div>
+            </div>
+
+            <div class="card" id="communitySection">
+                <div class="community-hover-card">
+                    <div class="community-preview-content">
+                        <h3>💬 Community</h3>
+                        <div class="community-preview">
+                            <div class="online-indicator">
+                                <span class="status-dot active"></span>
+                                <span class="status-text">4 people online</span>
+                            </div>
+                            <div class="activity-preview">
+                                <span class="focus-indicator">⚡ 2 focusing</span>
+                                <span class="break-indicator">☕ 2 on break</span>
+                            </div>
+                            <div class="chat-preview">
+                                <div class="chat-bubble">
+                                    <span class="chat-user">Alex:</span> Just finished my task! 🎉
+                                </div>
+                                <div class="chat-bubble">
+                                    <span class="chat-user">Sam:</span> Great work! Taking a quick break
+                                </div>
+                            </div>
+                        </div>
+                        <button class="community-join-btn" disabled>Join Chat</button>
+                    </div>
+                    <div class="community-hover-text">
+                        <p class="text head">Coming Soon!</p>
+                        <span><strong>Community Chat Rooms</strong></span>
+                        <p class="text benefits">Connect with others who understand your struggles. Get gentle accountability, share wins, and feel less alone in your productivity journey.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <div class="notes-sidebar">
+                    <h3>My Notes</h3>
+                    <button class="add-note-btn" id="addNoteBtn">+ Add Note</button>
+                    <div class="notes-list" id="notesList"></div>
+                </div>
+                <div class="notes-main">
+                    <div id="noteEditor" class="note-editor note-editor-hidden">
+                        <input type="text" class="note-title-input" id="noteTitleInput" placeholder="Note Title" />
+                        <div class="note-content" id="noteContent" contenteditable="true" data-placeholder="Start writing your thoughts..."></div>
+                        <div id="formatToolbar" class="format-toolbar format-toolbar-hidden">
+                            <button data-tag="strong">B</button>
+                            <button data-tag="em">I</button>
+                            <button data-tag="u">U</button>
+                        </div>
+                    </div>
+                    <div id="emptyState" class="empty-state">
+                        <p>Select a note to view or create a new one</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer Duration Modal -->
+    <div class="modal unified-modal" id="durationModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDurationModal()">❌</button>
+            <h3>Select Timer Duration</h3>
+            <div class="duration-options">
+                <button class="duration-btn" onclick="selectDuration(5)">5 minutes</button>
+                <button class="duration-btn" onclick="selectDuration(10)">10 minutes</button>
+                <button class="duration-btn" onclick="selectDuration(25)">25 minutes</button>
+            </div>
+            <div class="custom-duration">
+                <input type="number" id="customDuration" placeholder="Custom minutes" min="1" max="60">
+                <button class="modal-btn primary" onclick="selectCustomDuration()">Start</button>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeDurationModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Time Modal -->
+    <div class="modal unified-modal" id="addTimeModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAddTimeModal()">❌</button>
+            <h3>Add more time</h3>
+            <input type="number" id="addTimeInput" placeholder="Add how many minutes?" value="5" min="1" class="modal-input">
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeAddTimeModal()">Cancel</button>
+                <button class="modal-btn primary" id="confirmAddTime">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Break Task Modal -->
+    <div class="modal unified-modal" id="addBreakTaskModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeBreakTaskModal()">❌</button>
+            <h3>🧩 Broken Down Tasks</h3>
+            <p class="floating-msg">Add small sub-tasks so you know exactly where to pick up when you're back.</p>
+            <input type="text" id="breakTaskInput" placeholder="e.g., write intro paragraph" class="modal-input">
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="saveBreakTask()">Add</button>
+                <button class="modal-btn secondary" onclick="closeBreakTaskModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Subtask Modal -->
+    <div class="modal unified-modal" id="addSubtaskModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSubtaskModal()">❌</button>
+            <h3 id="subtaskModalTitle">Add Subtask</h3>
+            <p class="floating-msg">Break this task into smaller steps</p>
+            <div id="subtaskInputs"></div>
+            <button id="addSubtaskRowBtn" class="add-break-item">➕ Add subtask</button>
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="saveSubtasks()">Save</button>
+                <button class="modal-btn secondary" onclick="closeSubtaskModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Template Modal -->
+    <div class="modal unified-modal" id="templateModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeTemplateModal()">❌</button>
+            <h3 id="templateModalTitle">New Template</h3>
+            <input type="text" id="templateNameInput" placeholder="Template name" class="modal-input">
+            <div id="templateSubtasks"></div>
+            <button id="addSubtaskBtn" class="add-break-item">➕ Add subtask</button>
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="saveTemplate()">Save</button>
+                <button class="modal-btn secondary" onclick="closeTemplateModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Template Modal -->
+    <div class="modal unified-modal" id="deleteTemplateModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDeleteTemplateModal()">❌</button>
+            <h3>Delete this template?</h3>
+            <p>This cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="confirmDeleteTemplate()">Delete</button>
+                <button class="modal-btn secondary" onclick="closeDeleteTemplateModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Completion Modal -->
+    <div class="modal unified-modal" id="completionModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCompletionModal()">❌</button>
+            <h3>Timer Complete! Did you finish this task?</h3>
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="completeTask()">✅ Yes, finished</button>
+                <button class="modal-btn secondary" onclick="addMoreTime()">➕ Need more time</button>
+                <button class="modal-btn secondary" onclick="keepTaskActive()">🕗 Keep working</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Log Modal -->
+    <div class="modal unified-modal" id="dailyLogModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDailyLog()">❌</button>
+            <h3>Daily Log</h3>
+            <div id="dailyLogContent"></div>
+        </div>
+    </div>
+
+    <!-- Mood Reason Modal -->
+    <div class="modal unified-modal" id="moodReasonModal">
+        <div class="modal-content mood-reason-content">
+            <button class="modal-close" onclick="closeMoodReasonModal()">❌</button>
+            <h3 id="moodReasonHeader">Want to share why you felt this way?</h3>
+            <input type="text" id="moodReasonInput" class="modal-input" placeholder="Optional reason (e.g., 'feeling overwhelmed', 'distracted today')">
+            
+            <div id="breakSuggestion">
+                <div class="break-suggestion-header">
+                    <span class="break-icon">🧩</span>
+                    <div class="break-text">
+                        <h4>Break it down for when you return</h4>
+                        <p class="floating-msg">Add small steps so you know exactly where to pick up</p>
+                    </div>
+                </div>
+                
+                <div class="task-breakdown-section">
+                    <div id="breakSteps" class="break-steps-container">
+                        <div class="break-item">
+                            <input type="checkbox" class="break-checkbox">
+                            <input type="text" class="break-input" placeholder="e.g., write intro paragraph">
+                            <button class="remove-break-item" onclick="removeBreakItem(this)">✕</button>
+                        </div>
+                        <div class="break-item">
+                            <input type="checkbox" class="break-checkbox">
+                            <input type="text" class="break-input" placeholder="e.g., find supporting images">
+                            <button class="remove-break-item" onclick="removeBreakItem(this)">✕</button>
+                        </div>
+                        <div class="break-item">
+                            <input type="checkbox" class="break-checkbox">
+                            <input type="text" class="break-input" placeholder="e.g., review and edit">
+                            <button class="remove-break-item" onclick="removeBreakItem(this)">✕</button>
+                        </div>
+                    </div>
+                    
+                    <div class="break-actions-row">
+                        <button id="addBreakStep" class="add-break-item">➕ Add step</button>
+                        <button id="saveBreakTasks" class="save-break-tasks">💾 Save Tasks</button>
+                    </div>
+                </div>
+                
+                <div class="break-timer-section">
+                    <div class="break-timer-header">
+                        <span class="timer-icon">⏰</span>
+                        <span class="timer-label">Take a break for:</span>
+                    </div>
+                    <div class="break-duration-controls">
+                        <button class="duration-quick-btn" onclick="setBreakDuration(5)">5 min</button>
+                        <button class="duration-quick-btn" onclick="setBreakDuration(15)">15 min</button>
+                        <button class="duration-quick-btn" onclick="setBreakDuration(30)">30 min</button>
+                        <div class="custom-duration">
+                            <input type="number" id="breakDuration" value="15" min="1" max="120">
+                            <span>min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="breakError" class="break-error"></div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn primary" id="startBreakBtn">🏃‍♀️ Start Break</button>
+                <button class="modal-btn secondary" id="saveMoodReason">💭 Save Reason Only</button>
+                <button class="modal-btn secondary" id="skipMoodReason">Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Focus Task Name Modal -->
+    <div class="modal unified-modal" id="focusTaskModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeFocusTaskModal()">❌</button>
+            <h3>Name this focus session</h3>
+            <input type="text" id="focusTaskName" placeholder="Task name" class="modal-input">
+            <div class="modal-actions">
+                <button class="modal-btn primary" id="startFocusTask">Start</button>
+                <button class="modal-btn secondary" onclick="closeFocusTaskModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mood Prompt Modal -->
+    <div class="modal unified-modal" id="moodPromptModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeMoodPromptModal()">❌</button>
+            <h3 id="moodPromptTitle">Mood Check</h3>
+            <div class="mood-container">
+                <div>
+                    <div class="emoji" data-mood="😐">😐</div>
+                    <div class="mood-label">meh</div>
+                </div>
+                <div>
+                    <div class="emoji" data-mood="🙂">🙂</div>
+                    <div class="mood-label">okay</div>
+                </div>
+                <div>
+                    <div class="emoji" data-mood="😄">😄</div>
+                    <div class="mood-label">good</div>
+                </div>
+                <div>
+                    <div class="emoji" data-mood="😮‍💨">😮‍💨</div>
+                    <div class="mood-label">tired</div>
+                </div>
+                <div>
+                    <div class="emoji" data-mood="😫">😫</div>
+                    <div class="mood-label">stressed</div>
+                </div>
+            </div>
+                <input type="text" id="moodPromptReason" placeholder="What made it difficult?" class="modal-input mood-prompt-reason-hidden">
+            <div class="modal-actions">
+                <button class="modal-btn primary submit-mood-prompt-hidden" id="submitMoodPrompt">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Timer Display -->
+    <div class="task-timer-display task-timer-display-hidden" id="taskTimerDisplay">
+        <button class="minimize-btn" onclick="minimizeTaskTimer()">▾</button>
+        <div class="task-timer-title" id="taskTimerTitle"></div>
+        <div class="task-timer-time" id="taskTimerTime"></div>
+        <div class="task-progress"><div class="task-progress-bar" id="taskProgressBar"></div></div>
+        <div class="timer-controls">
+            <button onclick="pauseTaskTimer()" id="pauseTaskBtn">⏸</button>
+            <button onclick="resumeTaskTimer()" id="resumeTaskBtn" class="timer-resume-btn-hidden">▶️</button>
+            <button onclick="completeCurrentTask()" title="Mark as complete">✓</button>
+            <button onclick="addMoreTimeDuringRun()">➕</button>
+            <button onclick="cancelTaskTimer()">✖️</button>
+        </div>
+    </div>
+
+    <div class="task-timer-display break-timer-display-hidden" id="breakTimerDisplay">
+        <button class="minimize-btn" onclick="cancelBreakTimer()">✖️</button>
+        <div class="task-timer-title">Break Time ☕️</div>
+        <div class="task-timer-time" id="breakTimerTime"></div>
+        <div class="task-progress"><div class="task-progress-bar" id="breakProgressBar"></div></div>
+    </div>
+
+    <!-- Mood Help Modal -->
+    <div class="modal unified-modal" id="moodHelpModal">
+        <div class="modal-content mood-help-content">
+            <button class="modal-close" onclick="closeMoodHelpModal()">❌</button>
+            <h3>Why track your mood?</h3>
+            <div class="mood-help-text">
+                <p>It might seem cheesy, but it's often the only reason you realize why the day felt hard—or how you got through it.</p>
+                
+                <div class="mood-help-visual">
+                    <div class="help-battery-example">
+                        <div class="help-battery-label">Your energy today:</div>
+                        <div class="help-battery-gauge">
+                            <div class="help-battery-body">
+                                <div class="help-battery-bar empty"></div>
+                                <div class="help-battery-bar empty"></div>
+                                <div class="help-battery-bar empty"></div>
+                                <div class="help-battery-bar filled mood-tired"></div>
+                                <div class="help-battery-bar filled mood-tired"></div>
+                            </div>
+                            <div class="help-battery-tip"></div>
+                        </div>
+                        <div class="help-battery-status">Tired (2/5) - Maybe take it easy today</div>
+                    </div>
+                </div>
+
+                <div class="mood-help-benefits">
+                    <div class="benefit-item">
+                        <strong>It connects the dots.</strong><br>
+                        What looks like laziness might've been quiet panic. Mood check-ins help you catch what's really going on, before the self-blame sets in.
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <strong>It softens the story.</strong><br>
+                        You start to notice: "Oh, that was just a heavy day." Not "something's wrong with me."
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <strong>It reveals odd little patterns.</strong><br>
+                        Maybe Tuesdays always drain you. Maybe things go smoother after yelling into a pillow and drinking orange juice. (Relatable.)
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <strong>It makes planning less fake.</strong><br>
+                        Some tasks seem small but feel huge. Tracking helps you stop pretending they're easy—and plan around their real weight.
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <strong>It helps you feel what you're actually feeling.</strong><br>
+                        When executive dysfunction kicks in, everything can feel foggy or numb—like your emotions are on mute. A quick mood check-in helps you tune back in, so you can name what's going on instead of just feeling stuck.
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <strong>And it counts.</strong><br>
+                        Even when you can't do much else—this counts. Five seconds to check in might be what unlocks the next five minutes.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Past Moods Modal -->
+    <div class="modal unified-modal" id="pastMoodsModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePastMoodsModal()">❌</button>
+            <h3>Past Moods</h3>
+            <div id="pastMoodsContent" class="mood-timeline"></div>
+        </div>
+    </div>
+
+    <!-- Trends Modal -->
+    <div class="modal unified-modal" id="trendsModal">
+        <div class="modal-content trends-modal-content">
+            <button class="modal-close" onclick="closeTrendsModal()">❌</button>
+            <h3>📈 Your Mood Journey</h3>
+            <div class="trends-content">
+                <div class="trends-period">
+                    <h4>This Week</h4>
+                    <div id="weeklyTrends" class="weekly-trends"></div>
+                </div>
+                <div class="trends-insight" id="trendsInsight">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text">Analyzing your mood patterns...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Break Assistant Modal -->
+    <div class="modal unified-modal" id="breakAssistantModal">
+        <div class="modal-content break-assistant-content">
+            <button class="modal-close" onclick="closeBreakAssistantModal()">❌</button>
+            <div class="assistant-header">
+                <span class="assistant-icon">🐧</span>
+                <h3>Presently Assistant</h3>
+            </div>
+            <div class="assistant-message">
+                <p id="breakAssistantMessage">Hope you don't mind, I added 1 extra minute to your break… just 'cause you deserve it.</p>
+                <div class="assistant-subtext">
+                    <span id="breakTaskStatus">⏸️ Your task has been paused while you take this break</span>
+                </div>
+            </div>
+            <div class="break-suggestions" id="breakSuggestions">
+                <h4>💡 Break ideas:</h4>
+                <div class="suggestion-list">
+                    <div class="suggestion-item">🚶 Take a short walk</div>
+                    <div class="suggestion-item">💧 Drink some water</div>
+                    <div class="suggestion-item">🌱 Do some deep breathing</div>
+                    <div class="suggestion-item">👀 Look away from screens</div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="closeBreakAssistantModal()">Got it, thanks! 😊</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Energy Insights Modal -->
+    <div class="modal unified-modal" id="energyModal">
+        <div class="modal-content energy-modal-content">
+            <button class="modal-close" onclick="closeEnergyModal()">❌</button>
+            <h3>⚡ Your Energy Insights</h3>
+            <div class="energy-content">
+                <div class="energy-breakdown">
+                    <h4>🔋 Energy Distribution</h4>
+                    <div id="energyChart" class="energy-chart"></div>
+                </div>
+                <div class="pattern-insights">
+                    <h4>🧠 Pattern Insights</h4>
+                    <div class="insights-container">
+                        <div class="insight-item">
+                            <div class="insight-label">Your peak focus time</div>
+                            <div class="insight-value" id="peakFocusTime">Analyzing...</div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-label">Most productive days</div>
+                            <div class="insight-value" id="productiveDays">Discovering...</div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-label">Mood-energy correlation</div>
+                            <div class="insight-value" id="moodCorrelation">Learning...</div>
+                        </div>
+                        <div class="chart-preview">
+                            <div class="chart-bars" id="patternChart">
+                                <div class="chart-day">
+                                    <div class="chart-bar" style="height: 60%"></div>
+                                    <div class="chart-label">M</div>
+                                </div>
+                                <div class="chart-day">
+                                    <div class="chart-bar" style="height: 80%"></div>
+                                    <div class="chart-label">T</div>
+                                </div>
+                                <div class="chart-day">
+                                    <div class="chart-bar" style="height: 40%"></div>
+                                    <div class="chart-label">W</div>
+                                </div>
+                                <div class="chart-day">
+                                    <div class="chart-bar" style="height: 90%"></div>
+                                    <div class="chart-label">T</div>
+                                </div>
+                                <div class="chart-day">
+                                    <div class="chart-bar" style="height: 70%"></div>
+                                    <div class="chart-label">F</div>
+                                </div>
+                                <div class="chart-day">
+                                    <div class="chart-bar" style="height: 50%"></div>
+                                    <div class="chart-label">S</div>
+                                </div>
+                                <div class="chart-day">
+                                    <div class="chart-bar" style="height: 85%"></div>
+                                    <div class="chart-label">S</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="energy-insight" id="energyInsightText">
+                    <div class="insight-icon">💭</div>
+                    <div class="insight-text">Discovering your energy patterns...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Modal -->
+    <div class="modal unified-modal" id="chatModal">
+        <div class="modal-content chat-modal-content">
+            <button class="modal-close" onclick="closeChatModal()">❌</button>
+            
+            <!-- Room Selection Screen -->
+            <div id="roomSelectionScreen" class="room-selection-screen">
+                <h3>Choose Your Space</h3>
+                <div class="room-options">
+                    <button class="room-btn focus-room" onclick="enterFocusRoom()">
+                        <div class="room-icon">🎯</div>
+                        <div class="room-info">
+                            <div class="room-name">Focus Together</div>
+                            <div class="room-description">Work alongside others quietly</div>
+                            <div class="room-count" id="focusRoomCount">4 focusing</div>
+                        </div>
+                    </button>
+                    
+                    <button class="room-btn break-room" onclick="enterBreakRoom()">
+                        <div class="room-icon">☕</div>
+                        <div class="room-info">
+                            <div class="room-name">Break Room</div>
+                            <div class="room-description">Chat, celebrate, or get support</div>
+                            <div class="room-count" id="breakRoomCount">7 chatting</div>
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="community-intro">
+                    <p class="floating-msg">No pressure to participate! Being here helps everyone feel less alone.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Focus Room Modal (Separate) -->
+    <div class="modal unified-modal" id="focusRoomModal">
+        <div class="modal-content chat-modal-content">
+            <div class="focus-room-container">
+                <div class="chat-header">
+                    <button class="back-btn" onclick="returnToRoomSelection()">← Back</button>
+                    <h3>🎯 Focus Room</h3>
+                    <div class="room-controls">
+                        <button id="stepAwayFocusBtn" class="modal-btn secondary">Step Away</button>
+                    </div>
+                </div>
+                
+                <div class="focus-participants">
+                    <div class="participants-header">
+                        <span>Working together</span>
+                        <span id="focusParticipantCount">4 people</span>
+                    </div>
+                    <div id="focusStatusList" class="status-list">
+                        <div class="status-item">
+                            <span>👤 Alex • Writing blog post • 12 min</span>
+                        </div>
+                        <div class="status-item">
+                            <span>👤 Sam • Coding feature • 5 min</span>
+                        </div>
+                        <div class="status-item own-status">
+                            <span>👤 You • <span id="ownFocusStatus">Click to update</span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-encouragement">
+                    <div class="quick-reactions">
+                        <button class="reaction-btn" data-reaction="💪">💪</button>
+                        <button class="reaction-btn" data-reaction="✨">✨</button>
+                        <button class="reaction-btn" data-reaction="👍">👍</button>
+                    </div>
+                    <div class="floating-msg">Send gentle encouragement</div>
+                </div>
+                
+                <div class="focus-actions">
+                    <button id="updateFocusStatus" class="modal-btn primary">
+                        Update what I'm working on
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Break Room Modal (Separate) -->
+    <div class="modal unified-modal" id="breakRoomModal">
+        <div class="modal-content chat-modal-content">
+            <div class="break-room-container">
+                <div class="chat-header">
+                    <button class="back-btn" onclick="returnToRoomSelection()">← Back</button>
+                    <h3>☕ Break Room</h3>
+                    <div class="room-mood">
+                        <span id="roomMood">Supportive vibes</span>
+                        <button id="muteNotifications" class="link-button" title="Mute for 30 min">🔇</button>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message">
+                        <span class="chat-user">Sam:</span> Just finished that thing! 🎉
+                    </div>
+                    <div class="chat-message">
+                        <span class="chat-user">Alex:</span> Congrats! Taking a quick walk
+                    </div>
+                    <div class="chat-message own-message">
+                        <span class="chat-user">You:</span> Anyone else feel scattered today?
+                    </div>
+                    <div class="chat-message">
+                        <span class="chat-user">Jordan:</span> YES. Brain fog is real today
+                    </div>
+                </div>
+                
+                <div class="quick-responses">
+                    <button class="quick-btn" data-response="You got this! 💪">You got this! 💪</button>
+                    <button class="quick-btn" data-response="Same here 🙋‍♀️">Same here 🙋‍♀️</button>
+                    <button class="quick-btn" data-response="Celebrate! 🎉">Celebrate! 🎉</button>
+                    <button class="quick-btn" data-response="Taking a break too ☕">Taking a break ☕</button>
+                </div>
+                
+                <div class="message-input-container">
+                    <textarea id="chatInput" 
+                              placeholder="Share what's on your mind... (optional)" 
+                              maxlength="500"
+                              class="modal-input chat-input"></textarea>
+                    <div class="input-controls">
+                        <button id="sendMessage" class="modal-btn primary">Send</button>
+                        <div class="char-count"><span id="charCount">0</span>/500</div>
+                    </div>
+                </div>
+                
+                <div class="break-room-actions">
+                    <button id="switchToFocusFromBreak" class="link-button">🎯 Switch to Focus Room</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Focus Status Modal -->
+    <div class="modal unified-modal" id="updateStatusModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeUpdateStatusModal()">❌</button>
+            <h3>What are you working on?</h3>
+            <div class="status-update-form">
+                <input type="text" id="statusInput" placeholder="e.g., Writing blog post" class="modal-input">
+                <div class="floating-msg">This helps others feel connected to your work</div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn primary" id="saveStatus">Update</button>
+                <button class="modal-btn secondary" onclick="closeUpdateStatusModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
